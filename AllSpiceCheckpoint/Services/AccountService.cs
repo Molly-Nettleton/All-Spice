@@ -3,10 +3,12 @@ namespace AllSpiceCheckpoint.Services;
 public class AccountService
 {
   private readonly AccountsRepository _repo;
+  private readonly FavoritesRepository _favoritesRepo;
 
-  public AccountService(AccountsRepository repo)
+  public AccountService(AccountsRepository repo, FavoritesRepository favoritesRepo)
   {
     _repo = repo;
+    _favoritesRepo = favoritesRepo;
   }
 
   internal Account GetProfileByEmail(string email)
@@ -30,5 +32,10 @@ public class AccountService
     original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
     original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
     return _repo.Edit(original);
+  }
+
+  internal List<FavoriteRecipe> GetFavoritesByAccountId(Account userInfo)
+  {
+    return _favoritesRepo.GetFavoritesByAccountId(userInfo.Id);
   }
 }

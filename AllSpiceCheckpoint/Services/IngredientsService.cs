@@ -22,4 +22,28 @@ public class IngredientsService
   {
     return _ingredientsRepo.GetIngredientsByRecipe(recipeId);
   }
+
+  internal void RemoveIngredient(int ingredientId, string accountId)
+  {
+    Ingredient foundIngredient = GetIngredientById(ingredientId);
+    if (foundIngredient == null)
+    {
+      throw new Exception("Ingredient not found");
+    }
+    if ( foundIngredient.CreatorId != accountId)
+    {
+      throw new Exception("Unauthorized");
+    }
+    _ingredientsRepo.RemoveIngredient(foundIngredient);
+  }
+
+  internal Ingredient GetIngredientById(int ingredientId)
+  {
+    Ingredient foundIngredient = _ingredientsRepo.GetByIngredientId(ingredientId);
+    if (foundIngredient == null)
+    {
+      throw new Exception("Ingredient not found");
+    }
+    return foundIngredient;
+  }
 }

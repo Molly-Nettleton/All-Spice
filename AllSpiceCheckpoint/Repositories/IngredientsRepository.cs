@@ -33,4 +33,35 @@ public class IngredientsRepository : BaseRepository
       return ingredient;
     }, new { recipeId }).ToList();
   }
+
+  internal Ingredient GetByIngredientId(int ingredientId)
+  {
+    string sql = @"
+    SELECT
+    ing.*,
+    a.*
+    FROM ingredients ing
+    JOIN accounts a ON a.id = ing.creatorId
+    WHERE ing.id = @ingredientId
+    ;";
+    return _db.Query<Ingredient, Profile, Ingredient>(sql, (ingredient, profile) =>
+    {
+      ingredient.Creator = profile;
+      return ingredient;
+    }, new { ingredientId }).FirstOrDefault();
+  }
+
+  internal void RemoveIngredient(Ingredient foundIngredient)
+  {
+    string sql = @"
+    DELETE 
+    FROM ingredients
+    WHERE id = @id
+    ;";
+    int rowsAffected = _db.Execute(sql, foundIngredient);
+    if (rowsAffected == 0)
+    {
+      throw new Exception("Unable to delete.");
+    }
+  }
 }
