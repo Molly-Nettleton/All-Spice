@@ -59,4 +59,13 @@ public class FavoritesRepository : BaseRepository
       return recipe;
     }, new { accountId }).ToList();
   }
+
+internal Favorite GetFavoriteByRecipeAndAccount(Favorite newFavorite)
+{
+    string sql = @"
+  SELECT * FROM favorites
+  WHERE recipeId = @recipeId AND accountId = @accountId
+  ;";
+    return _db.Query<Favorite>(sql, newFavorite).FirstOrDefault();
+  }
 }

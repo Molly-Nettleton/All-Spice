@@ -1,7 +1,7 @@
 <template>
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade pic" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl ">
       <div class="modal-content all container-fluid p-0 pe-2">
         <div class="d-flex" v-if="recipe">
@@ -19,7 +19,7 @@
             <div class="d-flex justify-content-around ms-4">
 
               <div class="position-absolute selectable deleteicon rounded-3"><i
-                  class="mdi mdi-delete fs-3" @click="removeRecipe()" data-bs-dismiss="modal"></i></div>
+                  class="mdi mdi-delete fs-3" v-if="account.id == recipe.creatorId" @click="removeRecipe()" data-bs-dismiss="modal"></i></div>
 
               <div class="col-md-6">
                 <div class="ms-3 bg-dark text-center rounded-top p-2">
@@ -102,6 +102,7 @@ export default {
     });
     return {
       ingredients: computed(() => AppState.ingredients),
+      account: computed(() => AppState.account),
       async removeRecipe() {
         try {
           const yes = await Pop.confirm();
@@ -154,4 +155,9 @@ export default {
 .deleteicon {
   transform: translateY(28rem) translateX(22rem);
 }
+
+.pic {
+    background-image: URL(https://images.unsplash.com/photo-1506368249639-73a05d6f6488);
+    background-size: cover;
+  }
 </style>

@@ -18,14 +18,14 @@ class RecipesService {
     console.log(AppState.activeRecipe);
   }
 
-  async getList(type = '')
-  {let res
+  async getList(type = '') {
+    let res
     if (type) {
       res = await api.get('api/recipes', {
         params: {
-        type: type
-      }
-    })
+          type: type
+        }
+      })
     } else {
       res = await api.get('api/recipes')
     }
@@ -46,6 +46,12 @@ class RecipesService {
     AppState.recipes.splice(recipe, 1);
   }
 
+  async getMyRecipes() {
+    const res = await api.get("api/recipes");
+    console.log(res.data);
+    AppState.recipes = res.data.map((r) => new Recipe(r));
+    AppState.recipes = AppState.recipes.filter((r) => r.creator.id == AppState.account.id);
+  }
 }
 
 export const recipesService = new RecipesService()

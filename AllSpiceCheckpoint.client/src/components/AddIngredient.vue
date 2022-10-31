@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="addIngredient()">
+  <form @submit.prevent="addIngredient()" v-if="account.id == recipe.creatorId">
     <div class="input-group d-flex">
       <div class="d-flex col-md-2">
         <input type="text" maxlength="3" name="ingredient quantity"
@@ -28,6 +28,7 @@ export default {
     return {
       editable,
       recipe: computed(() => AppState.activeRecipe),
+      account: computed(() => AppState.account),
 
       async addIngredient() {
         try {
