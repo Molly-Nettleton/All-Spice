@@ -52,6 +52,19 @@ class RecipesService {
     AppState.recipes = res.data.map((r) => new Recipe(r));
     AppState.recipes = AppState.recipes.filter((r) => r.creator.id == AppState.account.id);
   }
-}
 
+  async getRecipesBySearchTerm(query) {
+    const res = await api.get("api/recipes")
+    console.log(res.data)
+    AppState.recipes = res.data.map(r => new Recipe(r))
+    AppState.recipes = AppState.recipes.filter((f) => f.category.toUpperCase().includes(query.toUpperCase()))
+
+    console.log("search recipes", AppState.recipes);
+  }
+
+  async editInstructions(recipeData, recipeId) {
+    const res = await api.put(`api/recipes/${recipeId}`, recipeData)
+    AppState.activeRecipe = new Recipe(res.data)
+  }
+}
 export const recipesService = new RecipesService()

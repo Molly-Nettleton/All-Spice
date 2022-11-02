@@ -5,8 +5,8 @@
       <h6 class="rounded px-2 py-1 ms-2 mt-2 category">{{ recipe.category }}</h6>
       <i class="mdi mdi-heart text-danger p-2 heart hoverable hover rounded-bottom mx-2" @click="addFavoriteRecipe()"></i>
     </div>
-    <div class="">
-      <p class="title p-1 rounded-2 hoverable" @click="getRecipeDetails()" data-bs-toggle="modal"
+    <div class="" @click="getRecipeDetails()">
+      <p class="title p-1 rounded-2 hoverable"  data-bs-toggle="modal"
         data-bs-target="#exampleModal">{{ recipe.title }}</p>
     </div>
     
@@ -68,13 +68,13 @@ export default {
   transform: translateY(15.5rem) translateX(.5rem);
   width: 330px;
   max-height: 70px;
-  background-color: rgba(88, 88, 88, 0.853);
+  background-color: rgba(88, 88, 88, 0.623);
   color: rgb(246, 245, 243);
   font-size: large;
 }
 
 .category {
-  background-color: rgba(88, 88, 88, 0.853);
+  background-color: rgba(88, 88, 88, 0.623);
   color: rgb(246, 245, 243);
 }
 

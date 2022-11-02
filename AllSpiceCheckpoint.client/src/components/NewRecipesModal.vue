@@ -2,14 +2,14 @@
   <div class="modal fade" id="recipeFormModal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content ">
-        <div class="modal-body FORM">
+        <div class="modal-body form" >
 
           <div class="p-2 bg-dark">
             <h4> New Recipe</h4>
           </div>
           <div class="row">
             <div class="d-flex">
-              <div class="mt-3 inputBox me-3 ms-3">
+              <div class="mt-3 inputBox me-3 ms-2">
                 <span>Title</span>
                 <input type="text" required name="title" v-model="editable.title" class="form-control mb-2 " />
               </div>
@@ -24,29 +24,26 @@
 
             <div class="mt-3 inputBox">
               <span>Instructions</span>
-              <input type="text" required name="instructions" row="4" v-model="editable.instructions"
-                class="form-control mb-2" />
+              <textarea type="text" required name="instructions" row="4" v-model="editable.instructions"
+                class="form-control mb-2" > </textarea>
             </div>
-            
+
             <div class="mt-3 inputBox">
               <div class="form-group">
                 <label for="type" class="pe-2 mb-2">Category</label>
                 <select required name="category" v-model="editable.category">
                   <option value="Breakfast">Breakfast</option>
                   <option value="Soup">Soup</option>
-                  <option value="Dessert">Dessert</option>
-                  <option value="Seafood">Seafood</option>
                   <option value="Drinks">Drinks</option>
                   <option value="Baking">Baking</option>
+                  <option value="Seafood">Seafood</option>
                   <option value="Bbq">BBQ</option>
+                  <option value="Italian">Italian</option>
                   <option value="Japanese">Japanese</option>
                   <option value="Mexican">Mexican</option>
                 </select>
               </div>
-
             </div>
-
-
 
             <div class="my-3 d-flex justify-content-between">
               <button class="btn btn-success selectable" type="submit" data-bs-dismiss="modal">

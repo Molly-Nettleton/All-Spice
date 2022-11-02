@@ -10,12 +10,17 @@ class IngredientsService {
   }
 
   async addIngredient(ingredientData) {
- 
     const res = await api.post("api/ingredients", ingredientData);
     console.log(res.data);
     
     let newIngredient = new Ingredient(res.data)
     AppState.ingredients = [newIngredient, ...AppState.ingredients]
+  }
+
+  async removeIngredient(ingredientId) {
+    const res = await api.delete(`api/ingredients/${ingredientId}`);
+    AppState.ingredients = AppState.ingredients.filter(i => i.id != ingredientId)
+    console.log(res.data);
   }
 
 }

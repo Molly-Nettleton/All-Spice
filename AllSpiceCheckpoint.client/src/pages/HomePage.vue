@@ -1,16 +1,23 @@
 <template>
-  <section class="container position-relative">
-    <div class="row justify-content-center pt-5">
-      <div class="fixed-bottom pb-3 pt-3 addrecipe text-end"><button data-bs-target="#recipeFormModal" data-bs-toggle="modal" class="btn btn-success rounded-circle hover elevation-3" title="Add recipe">
-        <i class="mdi mdi-plus  fs-3" data-bs-dismiss="modal"></i>
-      </button></div>
-      <div class="col-md-4 d-flex justify-content-center" v-for="r in recipes" :key="r.id">
-        <RecipeCard :recipe="r" />
+  <section class="container">
+    <div class="pt-5">
+      <div class="row">
+        <div class="col-1 fixed-bottom pb-3 text-end addcol">
+          <button data-bs-target="#recipeFormModal" data-bs-toggle="modal"
+            class="btn btn-success rounded-circle hover elevation-3" title="Add recipe">
+            <i class="mdi mdi-plus  fs-3" data-bs-dismiss="modal"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mb-5 d-flex flex-wrap">
+        <div class="col-md-4 d-flex justify-content-center" v-for="r in recipes">
+          <RecipeCard :recipe="r" :key="r?.id" />
+        </div>
       </div>
     </div>
   </section>
   <ActiveRecipeModal :recipe="activeRecipe" />
-  <NewRecipesModal/>
+  <NewRecipesModal />
 </template>
 
 <script>
@@ -46,8 +53,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.addrecipe{
-// position: absolute;
-//   transform: translateY(0.5rem) translateX(3.5rem);
+.addcol {
+  margin-left: 85rem;
 }
 </style>

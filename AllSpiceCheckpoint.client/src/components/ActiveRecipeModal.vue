@@ -18,14 +18,15 @@
             </div>
             <div class="d-flex justify-content-around ms-4">
 
-              <div class="position-absolute selectable deleteicon rounded-3"><i
-                  class="mdi mdi-delete fs-3" v-if="account.id == recipe.creatorId" @click="removeRecipe()" data-bs-dismiss="modal"></i></div>
+              <div class="position-absolute selectable deleteicon rounded-3"><i class="mdi mdi-delete fs-3 text-danger"
+                  v-if="account.id == recipe.creatorId" @click="removeRecipe()" data-bs-dismiss="modal"
+                  title="Delete recipe."></i></div>
 
               <div class="col-md-6">
                 <div class="ms-3 bg-dark text-center rounded-top p-2">
                   <h5 class="mt-1">Ingredients</h5>
                 </div>
-                <div class=" ms-3 rounded-0 bg-grey rounded box2 position-relative">
+                <div class=" ms-3 rounded-0 bg-grey rounded-bottom box2 position-relative">
 
                   <div class="ms-3 mt-1" v-for="i in ingredients" :key="i.id">
                     <div class="">
@@ -34,18 +35,40 @@
                   </div>
 
                 </div>
-                <div class="p-2 ms-3 bg-grey rounded-bottom">
+                <div class="p-2 ms-3 bg-grey rounded" v-if="account.id == recipe.creatorId">
                   <AddIngredient class="" />
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="ms-3 bg-dark text-center rounded-top p-2">
-                  <h5 class="mt-1">Steps</h5>
+                <div class="ms-3 bg-dark text-center rounded-top p-2 d-flex justify-content-around">
+                  <div class="col-1"></div>
+                  <div class="col-6">
+                    <h5 class="mt-1">Steps</h5>
+                  </div>
+
+                  <div class="col-1">
+                    <button v-if="account.id == recipe.creatorId" class="rounded-circle border border-white mt-1 hover"
+                      type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+                      aria-controls="collapseExample">
+                      <i class="mdi mdi-pencil text-primary" title="Edit instructions."></i>
+                    </button>
+                  </div>
                 </div>
                 <div class=" ms-3 rounded-0 bg-grey rounded box position-relative">
-              
                   <div class="ms-3 mt-1">
+                    <div class="collapse" id="collapseExample">
+                      <div class="card card-body me-3 p-1">
+                        <form @submit.prevent="handleSubmit()">
+                          <textarea v-model="editable.instructions" type="text" name="instructions"
+                            class="text-start border border-0 form-control input-group-text rounded-0"
+                            placeholder="Edit instructions."></textarea>
+                          <button class="btn btn-success selectable" type="submit">
+                            Submit
+                          </button>
+                        </form>
+                      </div>
+                    </div>
                     <div class="">
                       {{ recipe?.instructions }}
                     </div>
@@ -68,7 +91,7 @@
 
 <script>
 
-import { computed } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
 import { watchEffect } from "vue";
 import { AppState } from "../AppState.js";
 import { Recipe } from "../models/Recipe.js";
@@ -85,6 +108,7 @@ export default {
     }
   },
   setup(props) {
+    const editable = ref({});
     async function getIngredientsByRecipeId() {
       try {
         if (AppState.activeRecipe) {
@@ -97,10 +121,15 @@ export default {
       }
     }
     watchEffect(() => {
+ 
+        // editable.value = AppState.activeRecipe.instructions
+      
       AppState.activeRecipe;
+      editable.value =   {...AppState.activeRecipe }
       getIngredientsByRecipeId();
     });
     return {
+      editable,
       ingredients: computed(() => AppState.ingredients),
       account: computed(() => AppState.account),
       async removeRecipe() {
@@ -118,6 +147,33 @@ export default {
           Pop.error(error);
         }
       },
+
+      async removeIngredient() {
+        try {
+          const yes = await Pop.confirm();
+          if (!yes) {
+            return;
+          }
+          const recipeId = AppState.activeRecipe.id;
+          await recipesService.removeRecipe(recipeId);
+          Pop.success(
+            `Recipe removed.`
+          );
+        } catch (error) {
+          Pop.error(error);
+        }
+      },
+
+      async handleSubmit() {
+        try {
+          let recipeId = AppState.activeRecipe.id
+          await recipesService.editInstructions(editable.value, recipeId)
+        } catch (error) {
+          console.error('[]', error)
+          Pop.error(error)
+        }
+      }
+
     };
   },
   components: { Ingredients, AddIngredient }
@@ -142,12 +198,12 @@ export default {
 }
 
 .box2 {
-  height: 322px;
+  height: 375px;
   overflow: auto;
 }
 
 .imgcol {
-  height: 80vh;
+  height: 82vh;
   width: 400px;
   object-fit: cover;
 }
@@ -157,7 +213,8 @@ export default {
 }
 
 .pic {
-    background-image: URL(https://images.unsplash.com/photo-1506368249639-73a05d6f6488);
-    background-size: cover;
-  }
+  background-image: URL(https://images.unsplash.com/photo-1506368249639-73a05d6f6488);
+  background-size: cover;
+  background-position: bottom;
+}
 </style>

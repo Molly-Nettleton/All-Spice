@@ -8,12 +8,12 @@
         </span>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md d-flex justify-content-center mt-4">
+    <div class="row fontglow">
+      <div class="col-md d-flex justify-content-center mt-4 ">
         <h2 class="">ALL SPICE</h2>
       </div>
     </div>
-    <div class="row">
+    <div class="row fontglow">
       <div class="col-md d-flex justify-content-center">
         <h5>Recipes n stuff</h5>
       </div>
@@ -23,9 +23,9 @@
   <div class="d-flex justify-content-center">
     <div class="col-md-4 bg-white d-flex justify-content-center buttonbar elevation-5">
       <div class="mt-2">
-        <button @click="getAllRecipes('')" class="btn ms-3 fs-4 hover" title="Home">HOME</button>
-        <button @click="getMyRecipes('myrecipes')" class="btn ms-3 fs-4 hover" Title="MyRecipes">MY RECIPES</button>
-        <button @click="getFavoriteRecipes('myfavorites')" class="btn ms-3 me-3 fs-4 hover"
+        <button @click="getAllRecipes('')" class="btn ms-2 fs-4 hover" title="Home">HOME</button>
+        <button @click="getMyRecipes('myrecipes')" class="btn ms-2 fs-4 hover" Title="MyRecipes">MY RECIPES</button>
+        <button @click="getFavoriteRecipes('myfavorites')" class="btn ms-2 me-2 fs-4 hover"
           Title="Favorites">FAVORITES</button>
       </div>
     </div>
@@ -34,44 +34,47 @@
 
 
 <script>
+import { computed } from "@vue/reactivity"
+import { AppState } from "../AppState.js"
 import { accountService } from "../services/AccountService.js"
 import { recipesService } from "../services/RecipesService.js"
 import Pop from "../utils/Pop.js"
+import SearchBar from "./SearchBar.vue"
 
 
 export default {
-  setup() {
-    return {
-
-      async getAllRecipes() {
-        try {
-          await recipesService.getAllRecipes()
-        } catch (error) {
-          console.error('[]', error)
-          Pop.error(error)
-        }
-      },
-
-      async getFavoriteRecipes() {
-        try {
-          await accountService.getFavoriteRecipes()
-        } catch (error) {
-          console.error('[]', error)
-          Pop.error(error)
-        }
-      },
-
-      async getMyRecipes() {
-        try {
-          await recipesService.getMyRecipes()
-        } catch (error) {
-          Pop.error(error)
-        }
-      },
-
-
-    }
-  }
+    setup() {
+        return {
+            recipes: computed(() => AppState.recipes),
+            async getAllRecipes() {
+                try {
+                    await recipesService.getAllRecipes();
+                }
+                catch (error) {
+                    console.error("[]", error);
+                    Pop.error(error);
+                }
+            },
+            async getFavoriteRecipes() {
+                try {
+                    await accountService.getFavoriteRecipes();
+                }
+                catch (error) {
+                    console.error("[]", error);
+                    Pop.error(error);
+                }
+            },
+            async getMyRecipes() {
+                try {
+                    await recipesService.getMyRecipes();
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            },
+        };
+    },
+    components: { SearchBar }
 }
 </script>
 

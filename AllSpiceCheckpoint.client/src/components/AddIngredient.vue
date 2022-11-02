@@ -2,7 +2,7 @@
   <form @submit.prevent="addIngredient()" v-if="account.id == recipe.creatorId">
     <div class="input-group d-flex">
       <div class="d-flex col-md-2">
-        <input type="text" maxlength="3" name="ingredient quantity"
+        <input type="text" maxlength="35" name="ingredient quantity"
           class="border border-0 form-control input-group-text rounded-0" placeholder="#" v-model="editable.quantity" />
       </div>
       <div class="d-flex col-10">
@@ -24,7 +24,7 @@ import Pop from "../utils/Pop.js";
 
 export default {
   setup() {
-    let editable = ref({ recipeId: AppState.activeRecipe.id });
+    let editable = ref({ });
     return {
       editable,
       recipe: computed(() => AppState.activeRecipe),
@@ -32,7 +32,9 @@ export default {
 
       async addIngredient() {
         try {
+          editable.value.recipeId = AppState.activeRecipe.id
           await ingredientsService.addIngredient(editable.value)
+          editable.value = {}
         } catch (error) {
           Pop.error(error);
         }
