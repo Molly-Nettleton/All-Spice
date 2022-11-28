@@ -3,10 +3,10 @@
 
     <div class="d-flex justify-content-between">
       <h6 class="rounded px-2 py-1 ms-2 mt-3 category">{{ recipe.category }}</h6>
-      <i class="mdi mdi-heart text-danger p-2 heart hoverable hover rounded-bottom mx-2"
-        @click="addFavoriteRecipe()"></i>
-      <i class="mdi mdi-heart-outline text-danger p-2 heart hoverable hover rounded-bottom mx-2"
+      <i class="mdi mdi-heart text-danger p-2 heart hoverable hover rounded-bottom mx-2" v-if="favorited"
         @click="removeFavoriteRecipe()"></i>
+      <i class="mdi mdi-heart-outline text-danger p-2 heart hoverable hover rounded-bottom mx-2" v-else
+        @click="addFavoriteRecipe()"></i>
     </div>
     <div class="" @click="getRecipeDetails()">
       <p class="title p-1 rounded-2 selectable" data-bs-toggle="modal" data-bs-target="#exampleModal">{{ recipe.title }}
@@ -23,6 +23,7 @@ import { recipesService } from "../services/RecipesService.js";
 import { favoritesService } from "../services/FavoritesService.js";
 import Pop from "../utils/Pop.js";
 import { AppState } from "../AppState.js";
+import { computed } from "@vue/reactivity";
 
 
 export default {
@@ -34,10 +35,11 @@ export default {
   },
   setup(props) {
     return {
+      favorited: computed(() => AppState.favorites.find(f => f.id == props.recipe.id)),
       async addFavoriteRecipe() {
         try {
           // const recipeId = { recipeId: props.recipe.id }
-          await favoritesService.addFavoriteRecipe(recipeId)
+          await favoritesService.addFavoriteRecipe(props.recipe)
           Pop.success("Added to favorites.")
         } catch (error) {
           console.error('[]', error)

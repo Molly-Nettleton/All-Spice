@@ -13,6 +13,7 @@ export class Recipe {
     this.img = data.img
     this.category = data.category
     this.favoriteCount = data.favoriteCount
+    this.favorited = data.favorited || false
     this.archived = data.archived
   }
 }
