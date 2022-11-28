@@ -66,6 +66,7 @@ form:invalid button[type="submit"] {
   filter: brightness(110%);
   filter: contrast(110%);
   transition: 0.5s ease;
+  text-decoration: underline;
 }
 
 .gradient-box {
@@ -74,9 +75,14 @@ form:invalid button[type="submit"] {
 }
 
 .fontglow{
-color: aliceblue;
-text-shadow: 1px 1px rgb(24, 24, 24),
-0px 0px 5px #d8d8d8;}
+color: rgb(242, 249, 244);
+text-shadow: 1px 1px rgb(24, 24, 24)}
+
+.fontglow1 {
+  color: aliceblue;
+  text-shadow: 1px 1px rgb(24, 24, 24),
+    0px 0px 5px #d8d8d8;
+}
 // ------------------------------------ SCROLLBAR  ---------------------------------------------
 
 *::-webkit-scrollbar {
@@ -108,3 +114,4 @@ text-shadow: 1px 1px rgb(24, 24, 24),
   background: linear-gradient(to bottom right, #797979,
     #494949);
 }
+

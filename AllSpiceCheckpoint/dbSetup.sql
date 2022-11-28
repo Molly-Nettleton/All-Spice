@@ -1,4 +1,4 @@
--- Active: 1666715470766@@SG-big-kitty-4444-6833-mysql-master.servers.mongodirector.com@3306@littlemeowmeows
+-- Active: 1669607510115@@bobocat.mysql.database.azure.com@3306@mollysdatabase
 CREATE TABLE
     IF NOT EXISTS accounts(
         id VARCHAR(255) NOT NULL PRIMARY KEY COMMENT 'Primary Key',

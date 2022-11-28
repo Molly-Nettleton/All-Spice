@@ -14,7 +14,7 @@
           <div class="col-md-8 p-4 ">
             <div class="d-flex">
               <h4 class="ms-4">{{ recipe?.title }} </h4>
-              <div class="bg-grey mb-4 px-2 rounded-5 ms-3 mt-1 pb-1">{{ recipe?.category }}</div>
+              <div class="bg-grey mb-4 px-2 rounded-5 ms-3 pt-1 pb-1">{{ recipe?.category }}</div>
             </div>
             <div class="d-flex justify-content-around ms-4">
 
@@ -23,17 +23,18 @@
                   title="Delete recipe."></i></div>
 
               <div class="col-md-6">
-                <div class="ms-3 bg-dark text-center rounded-top p-2">
-                  <h5 class="mt-1">Ingredients</h5>
-                </div>
-                <div class=" ms-3 rounded-0 bg-grey rounded-bottom box2 position-relative">
+                <div class="ingredcol">
+                  <div class="ms-3 bg-dark text-center rounded-top p-2">
+                    <h5 class="mt-1">Ingredients</h5>
+                  </div>
+                  <div class=" ms-3 rounded-0 bg-grey rounded-bottom box2 position-relative">
 
-                  <div class="ms-3 mt-1" v-for="i in ingredients" :key="i.id">
-                    <div class="">
-                      <Ingredients :ingredient="i" />
+                    <div class="ms-3 mt-1" v-for="i in ingredients" :key="i.id">
+                      <div class="">
+                        <Ingredients :ingredient="i" />
+                      </div>
                     </div>
                   </div>
-
                 </div>
                 <div class="p-2 ms-3 bg-grey rounded" v-if="account.id == recipe.creatorId">
                   <AddIngredient class="" />
@@ -77,7 +78,6 @@
                 <div class="p-2 ms-3 bg-grey rounded-bottom">
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -121,11 +121,8 @@ export default {
       }
     }
     watchEffect(() => {
- 
-        // editable.value = AppState.activeRecipe.instructions
-      
       AppState.activeRecipe;
-      editable.value =   {...AppState.activeRecipe }
+      editable.value = { ...AppState.activeRecipe }
       getIngredientsByRecipeId();
     });
     return {
@@ -187,7 +184,7 @@ export default {
 }
 
 .closebtn {
-  transform: translateY(-35rem) translateX(69em);
+  
 
   position: absolute;
 }
@@ -216,5 +213,13 @@ export default {
   background-image: URL(https://images.unsplash.com/photo-1506368249639-73a05d6f6488);
   background-size: cover;
   background-position: bottom;
+}
+
+@media screen AND (max-width: 768px) {
+  .imgcol {
+    height: auto;
+    width: 50px;
+  }
+
 }
 </style>

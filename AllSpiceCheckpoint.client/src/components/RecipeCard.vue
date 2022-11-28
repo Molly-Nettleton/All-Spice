@@ -1,15 +1,18 @@
 <template>
-  <div class=" component my-2 rounded-3 mt-4 elevation-5 hover" :style="{ backgroundImage: `url(${recipe.img})` }">
+  <div class=" component my-4 rounded-3 elevation-5 hover" :style="{ backgroundImage: `url(${recipe.img})` }">
 
     <div class="d-flex justify-content-between">
-      <h6 class="rounded px-2 py-1 ms-2 mt-2 category">{{ recipe.category }}</h6>
-      <i class="mdi mdi-heart text-danger p-2 heart hoverable hover rounded-bottom mx-2" @click="addFavoriteRecipe()"></i>
+      <h6 class="rounded px-2 py-1 ms-2 mt-3 category">{{ recipe.category }}</h6>
+      <i class="mdi mdi-heart text-danger p-2 heart hoverable hover rounded-bottom mx-2"
+        @click="addFavoriteRecipe()"></i>
+      <i class="mdi mdi-heart-outline text-danger p-2 heart hoverable hover rounded-bottom mx-2"
+        @click="removeFavoriteRecipe()"></i>
     </div>
     <div class="" @click="getRecipeDetails()">
-      <p class="title p-1 rounded-2 hoverable"  data-bs-toggle="modal"
-        data-bs-target="#exampleModal">{{ recipe.title }}</p>
+      <p class="title p-1 rounded-2 selectable" data-bs-toggle="modal" data-bs-target="#exampleModal">{{ recipe.title }}
+      </p>
     </div>
-    
+
   </div>
 </template>
 
@@ -19,6 +22,7 @@ import { Recipe } from "../models/Recipe.js";
 import { recipesService } from "../services/RecipesService.js";
 import { favoritesService } from "../services/FavoritesService.js";
 import Pop from "../utils/Pop.js";
+import { AppState } from "../AppState.js";
 
 
 export default {
@@ -32,7 +36,7 @@ export default {
     return {
       async addFavoriteRecipe() {
         try {
-          const recipeId = { recipeId: props.recipe.id }
+          // const recipeId = { recipeId: props.recipe.id }
           await favoritesService.addFavoriteRecipe(recipeId)
           Pop.success("Added to favorites.")
         } catch (error) {
@@ -40,6 +44,24 @@ export default {
           Pop.error(error)
         }
       },
+
+      async removeFavoriteRecipe() {
+        try {
+          let id = this.favorited.favoriteId
+          // const favorite = AppState.favoriteRecipe.find(f => f.accountId == AppState.account.id && f.recipeId == AppState.activeRecipe.id)
+          // await favoritesService.removeFavoriteRecipe(favorite.id)
+          const yes = await Pop.confirm();
+          if (!yes) {
+            return;
+          }
+          await favoritesService.removeFavoriteRecipe(id)
+          Pop.success("Removed from favorites.")
+        } catch (error) {
+          console.error('[]', error)
+          Pop.error(error)
+        }
+      },
+
       async getRecipeDetails() {
         try {
           await recipesService.getRecipeDetails(props.recipe.id)

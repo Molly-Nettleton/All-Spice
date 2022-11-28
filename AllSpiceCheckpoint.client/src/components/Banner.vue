@@ -2,14 +2,14 @@
   <div class="container-fluid banner">
     <div class="row">
       <div class="d-flex justify-content-end">
-        <SearchBar />
-        <span class="ms-4 mt-2">
+        <SearchBar class="search" />
+        <span class="ms-4 mt-2 login">
           <Login />
         </span>
       </div>
     </div>
     <div class="row fontglow">
-      <div class="col-md d-flex justify-content-center mt-4 ">
+      <div class="col-md d-flex justify-content-center mt-4">
         <h2 class="">ALL SPICE</h2>
       </div>
     </div>
@@ -94,5 +94,16 @@ export default {
   position: absolute;
   min-height: 70px;
   min-width: 250px;
+}
+
+@media screen AND (max-width: 768px) {
+  .buttonbar{
+    max-width:200px
+    position
+  }
+
+  .login{
+    margin-top: 0%!important;
+  }
 }
 </style>

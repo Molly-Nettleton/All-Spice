@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="mb-5 d-flex flex-wrap">
-        <div class="col-md-4 d-flex justify-content-center" v-for="r in recipes">
+        <div class="col-md-4 d-flex justify-content-center recipes" v-for="r in recipes">
           <RecipeCard :recipe="r" :key="r?.id" />
         </div>
       </div>
@@ -54,6 +54,13 @@ export default {
 
 <style scoped lang="scss">
 .addcol {
-  margin-left: 85rem;
+  margin-left: 90rem;
+}
+
+@media screen AND (max-width: 768px) {
+  .recipes{
+    flex: auto;
+    justify-content: center;
+  }
 }
 </style>

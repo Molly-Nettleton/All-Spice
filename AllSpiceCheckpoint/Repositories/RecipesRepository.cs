@@ -36,7 +36,6 @@ public class RecipesRepository : BaseRepository
     }).ToList();
   }
 
-
   internal Recipe GetByRecipeId(int recipeId)
   {
     string sql = @" 
@@ -87,4 +86,5 @@ public class RecipesRepository : BaseRepository
     }
     return recipeData;
   }
+
 }
