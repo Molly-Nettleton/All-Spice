@@ -57,7 +57,8 @@ export default {
             },
             async getFavoriteRecipes() {
                 try {
-                    await accountService.getFavoriteRecipes();
+                  await accountService.getFavoriteRecipes();
+                    AppState.number = 1
                 }
                 catch (error) {
                     console.error("[]", error);

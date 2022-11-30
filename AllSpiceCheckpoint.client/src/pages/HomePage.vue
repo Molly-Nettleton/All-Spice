@@ -54,7 +54,7 @@ export default {
 
 <style scoped lang="scss">
 .addcol {
-  margin-left: 90rem;
+  margin-left: 86rem;
 }
 
 @media screen AND (max-width: 768px) {

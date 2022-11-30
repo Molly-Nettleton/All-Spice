@@ -8,17 +8,17 @@ class FavoritesService {
     let recipeId = {};
     recipeId.recipeId = recipe.id
     const res = await api.post("api/favorites", recipeId);
-    recipe.favoriteId = res.data.id
-    AppState.favoriteRecipe = [recipe, ...AppState.favoriteRecipe]
+    // recipe.favoriteId = res.data.id
+    AppState.favorites = [res.data, ...AppState.favorites]
 
   }
 
   async removeFavoriteRecipe(favoriteId) {
     await api.delete(`api/favorites/${favoriteId}`);
-    let index = AppState.favoriteRecipe.findIndex(f => f.favoriteId == favoriteId)
-    AppState.favoriteRecipe.splice(index, 1)
+    let index = AppState.favorites.findIndex(f => f.id == favoriteId)
+    AppState.favorites.splice(index, 1)
     if (AppState.number) {
-      AppState.favoriteRecipe = AppState.favoriteRecipe.filter(f => f.id != favoriteId)
+      AppState.recipes = AppState.recipes.filter(f => f.favoriteId != favoriteId)
     }
 
   }

@@ -14,6 +14,7 @@ export class Recipe {
     this.category = data.category
     this.favoriteCount = data.favoriteCount
     this.favorited = data.favorited || false
+    this.favoriteId = data.favoriteId
     this.archived = data.archived
   }
 }

@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between">
       <h6 class="rounded px-2 py-1 ms-2 mt-3 category">{{ recipe.category }}</h6>
       <i class="mdi mdi-heart text-danger p-2 heart hoverable hover rounded-bottom mx-2" v-if="favorited"
-        @click="removeFavoriteRecipe()"></i>
+        @click="removeFavoriteRecipe(favorited.id)"></i>
       <i class="mdi mdi-heart-outline text-danger p-2 heart hoverable hover rounded-bottom mx-2" v-else
         @click="addFavoriteRecipe()"></i>
     </div>
@@ -35,7 +35,17 @@ export default {
   },
   setup(props) {
     return {
-      favorited: computed(() => AppState.favorites.find(f => f.id == props.recipe.id)),
+      favorited: computed(() => {
+        let favorited = AppState.favorites.find(
+          (f, index) => f.recipeId == props.recipe.id
+        );
+        if (favorited) {
+          let recipe = AppState.recipes.find((r) => r.id == favorited.recipeId);
+          recipe.favorited = true;
+          recipe.favoriteId = favorited.id;
+        }
+        return favorited;
+      }),
       async addFavoriteRecipe() {
         try {
           // const recipeId = { recipeId: props.recipe.id }
@@ -47,9 +57,10 @@ export default {
         }
       },
 
-      async removeFavoriteRecipe() {
+      async removeFavoriteRecipe(id) {
         try {
-          let id = this.favorited.favoriteId
+          console.log(id)
+          // let id = this.favorited.favoriteId
           // const favorite = AppState.favoriteRecipe.find(f => f.accountId == AppState.account.id && f.recipeId == AppState.activeRecipe.id)
           // await favoritesService.removeFavoriteRecipe(favorite.id)
           const yes = await Pop.confirm();

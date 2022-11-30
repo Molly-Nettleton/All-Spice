@@ -42,6 +42,7 @@ public class FavoritesRepository : BaseRepository
   {
     string sql = @"
     SELECT
+    fav.*,
     rec.*,
     COUNT(fav.id) AS FavoriteCount,
     fav.id AS FavoriteId,
@@ -67,5 +68,16 @@ internal Favorite GetFavoriteByRecipeAndAccount(Favorite newFavorite)
   WHERE recipeId = @recipeId AND accountId = @accountId
   ;";
     return _db.Query<Favorite>(sql, newFavorite).FirstOrDefault();
+  }
+
+  internal List<Favorite> GetFavoritesByAccount(string id)
+  {
+      string sql = @"
+                SELECT 
+                favs.*
+                FROM favorites favs
+                WHERE favs.accountId = @id
+                     ;";
+        return _db.Query<Favorite>(sql, new { id }).ToList();
   }
 }

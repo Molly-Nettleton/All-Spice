@@ -17,7 +17,16 @@ class AccountService {
     const res = await api.get('account/favorites')
     console.log(res.data)
     AppState.recipes = res.data.map(r => new Recipe(r))
-    console.log(AppState.accountFavorites)
+    // AppState.favorites = res.data.map(f => new Recipe(f))
+   
+  }
+
+  async getFavorites() {
+    const res = await api.get('account/favorites/all')
+    console.log(res.data)
+    // AppState.accountFavorites = res.data.map(r => new Recipe(r))
+    AppState.favorites = res.data
+
   }
 }
 

@@ -38,4 +38,9 @@ public class AccountService
   {
     return _favoritesRepo.GetFavoritesByAccountId(userInfo.Id);
   }
+
+  internal List<Favorite> GetFavoritesByAccount(Account userInfo)
+  {
+    return _favoritesRepo.GetFavoritesByAccount(userInfo.Id);
+  }
 }
