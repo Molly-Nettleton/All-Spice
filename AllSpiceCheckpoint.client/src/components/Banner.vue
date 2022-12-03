@@ -10,14 +10,14 @@
     </div>
     <div class="row fontglow">
       <div class="col-md d-flex justify-content-center mt-4">
-        <h2 class="">ALL SPICE</h2>
+        <h1 class="p-2 rounded-2">ALL SPICE</h1>
       </div>
     </div>
-    <div class="row fontglow">
+    <!-- <div class="row fontglow">
       <div class="col-md d-flex justify-content-center">
         <h5>Recipes n stuff</h5>
       </div>
-    </div>
+    </div> -->
 
   </div>
   <div class="d-flex justify-content-center">

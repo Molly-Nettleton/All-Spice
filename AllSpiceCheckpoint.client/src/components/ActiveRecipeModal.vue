@@ -30,7 +30,7 @@
                   <div class=" ms-3 rounded-0 bg-grey rounded-bottom box2 position-relative">
 
                     <div class="ms-3 mt-1" v-for="i in ingredients" :key="i.id">
-                      <div class="">
+                      <div class="mb-2">
                         <Ingredients :ingredient="i" />
                       </div>
                     </div>
@@ -63,7 +63,7 @@
                         <form @submit.prevent="handleSubmit()">
                           <textarea v-model="editable.instructions" type="text" name="instructions"
                             class="text-start border border-0 form-control input-group-text rounded-0"
-                            placeholder="Edit instructions."></textarea>
+                            placeholder="Edit instructions." style="padding-left: 4px;"></textarea>
                           <button class="btn btn-success selectable" type="submit">
                             Submit
                           </button>
@@ -184,9 +184,8 @@ export default {
 }
 
 .closebtn {
-  
-
   position: absolute;
+  transform: translateY(-30rem) translateX(65rem);
 }
 
 .box {
@@ -200,13 +199,13 @@ export default {
 }
 
 .imgcol {
-  height: 82vh;
+  height: 65vh;
   width: 400px;
   object-fit: cover;
 }
 
 .deleteicon {
-  transform: translateY(28rem) translateX(22rem);
+  transform: translateY(31rem) translateX(22rem);
 }
 
 .pic {
